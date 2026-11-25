@@ -3,6 +3,8 @@ import path from "node:path";
 
 import { describe, expect, it } from "vitest";
 
+import { camadaPlataformaComPersonaHumana, personaHumanaLigada } from "@/lib/agent-engine/persona-humana";
+
 /**
  * A CAMADA PLATAFORMA NÃO DITA COMO O AGENTE SE APRESENTA.
  *
@@ -40,5 +42,26 @@ describe("platform.md não impõe apresentação ao agente", () => {
   it("mantém a regra de não afirmar ser humano e de responder com honestidade", () => {
     expect(PLATFORM).toMatch(/Nunca afirme ser humano/);
     expect(PLATFORM).toMatch(/responda com honestidade/);
+  });
+});
+
+/**
+ * Os DOIS modos da opção por organização "Persona humana" (`lib/agent-engine/persona-humana.ts`).
+ * Desligada (padrão), a regra acima chega ao prompt sem um byte mudado; ligada, só a seção de
+ * transparência é trocada — opt-out, pedido de humano e dados sensíveis continuam.
+ */
+describe("platform.md e a opção persona humana", () => {
+  it("padrão: a opção desligada não toca na regra de transparência", () => {
+    expect(personaHumanaLigada({})).toBe(false);
+    expect(PLATFORM).toMatch(/Nunca afirme ser humano/);
+  });
+
+  it("ligada: a regra de transparência sai e o resto da camada fica", () => {
+    const comPersona = camadaPlataformaComPersonaHumana(PLATFORM);
+    expect(comPersona).not.toMatch(/Nunca afirme ser humano/);
+    expect(comPersona).not.toMatch(/responda com honestidade/);
+    expect(comPersona).toMatch(/acolha o pedido de imediato/);
+    expect(comPersona).toMatch(/não quer mais receber mensagens/);
+    expect(comPersona).toMatch(/Nunca peça dados sensíveis/);
   });
 });

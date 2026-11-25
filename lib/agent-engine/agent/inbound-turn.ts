@@ -206,6 +206,7 @@ import {
 } from './stage-classifier';
 import { classificadoresDoTurno } from './classificadores-do-turno';
 import { loadPlaybook, textoDaOrganizacao } from './playbook';
+import { playbookComPersonaDaOrganizacao } from '../persona-humana';
 import {
   concessoesSemLastro,
   lastroDoContexto,
@@ -3465,10 +3466,17 @@ async function executarTurnoDoAgente(
           !preview && input.conversationId
             ? await prospectingConversationContext(pool, tenantId, input.conversationId)
             : '';
-        return loadPlaybook(
+        // Persona humana (opção por org, desligada por padrão): troca só a regra de
+        // transparência da camada plataforma — `lib/agent-engine/persona-humana.ts`.
+        return playbookComPersonaDaOrganizacao(
           pool,
           tenantId,
-          agentConfig !== null ? { agentLayer: agentConfig.systemPrompt + prospectingContext } : undefined,
+          await loadPlaybook(
+            pool,
+            tenantId,
+            agentConfig !== null ? { agentLayer: agentConfig.systemPrompt + prospectingContext } : undefined,
+          ),
+          runLog,
         );
       })(),
       // Skills situacionais (F3-09): índice (name+description) SEMPRE residente — vai junto do
