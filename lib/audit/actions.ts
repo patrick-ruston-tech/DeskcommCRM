@@ -339,6 +339,9 @@ export const AUDIT_ACTIONS = [
   // porque muda o que o sistema confere antes de falar com o cliente — e porque
   // custa dinheiro por mensagem.
   "ai.guardrail_layer_changed",
+  // Ligar/desligar a persona humana da organização (organizations.settings
+  // .persona_humana): muda se o agente revela ao cliente que é IA.
+  "ai.persona_humana_alterada",
   "ai_agent.run_started",
   "ai_agent.run_completed",
   "ai_agent.run_failed",
