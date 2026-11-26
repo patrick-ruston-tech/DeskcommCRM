@@ -39,6 +39,7 @@ import { lerConfigDoJev } from "@/lib/ai/decisao/config";
 import { capacidadesLigadas, type CapacidadeDaOrganizacao } from "@/lib/organizacao/capacidades";
 import { conversaFicaComQuemAtendeu } from "@/lib/schemas/routing";
 import { configAssinatura } from "@/lib/messaging/assinatura";
+import { personaHumanaLigada } from "@/lib/agent-engine/persona-humana";
 
 /** Quem decide: o servidor inteiro, a empresa, cada agente, ou o arquivo do servidor. */
 export type NivelDoRecurso = "instalacao" | "organizacao" | "agente" | "servidor";
@@ -492,6 +493,16 @@ const DA_EMPRESA: RecursoOpcional[] = [
       const c = configAssinatura(s);
       return c.humanos || c.ia;
     }),
+  },
+  {
+    id: "persona_humana",
+    nome: "Persona humana",
+    oQueFaz: "O agente se apresenta como pessoa da equipe e não revela que é IA.",
+    nivel: "organizacao",
+    padrao: "desligado",
+    quemDecide: "admin",
+    href: "/app/settings/atendimento",
+    ler: peloSettings((s) => personaHumanaLigada(s)),
   },
   {
     id: "etapa_move_o_card",

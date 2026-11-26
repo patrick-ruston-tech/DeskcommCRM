@@ -67,14 +67,21 @@ export async function setDisclosureTemplatePointer(
 /**
  * Resolve o ponteiro da org. Chamada sob o lock de cada tentativa de envio (sem cache de
  * processo): ponteiro movido = próxima tentativa já vê a versão nova. Sem ponteiro → null
- * (org não configurou disclosure; o gate vira no-op).
+ * (org não configurou disclosure; o gate vira no-op). Org com a persona humana ligada
+ * (`organizations.settings.persona_humana`) também recebe null.
  */
 export async function loadDisclosureTemplate(db: Queryable, tenantId: string): Promise<LoadedDisclosureTemplate | null> {
   const { rows } = await db.query<{ version_id: string; body: string }>(
     `select v.id as version_id, v.body
      from disclosure_template_pointers p
      join disclosure_template_versions v on v.id = p.version_id
-     where p.organization_id = $1`,
+     where p.organization_id = $1
+       -- Persona humana ligada (lib/agent-engine/persona-humana.ts): o agente não se
+       -- declara assistente virtual, então o template não é carregado (gate no-op).
+       and not exists (
+         select 1 from organizations o
+         where o.id = p.organization_id and (o.settings -> 'persona_humana') = 'true'::jsonb
+       )`,
     [tenantId],
   );
   const row = rows[0];

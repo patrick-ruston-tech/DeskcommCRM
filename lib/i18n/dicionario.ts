@@ -451,6 +451,14 @@ export const DICIONARIO: Traducoes = {
   "Quando o assistente identifica o próprio nome informado por texto e usa a capacidade Anotar dado que o cliente informou, pode preencher o nome vazio da ficha. O apelido do WhatsApp fica separado. Nomes existentes e e-mail continuam exigindo revisão humana. Confira a ficha se o assistente interpretar a mensagem incorretamente.": { es: "Cuando el asistente identifica el nombre propio informado por texto y usa la capacidad Anotar un dato que el cliente informó, puede completar el nombre vacío de la ficha. El apodo de WhatsApp queda separado. Los nombres existentes y el correo siguen requiriendo revisión humana. Revise la ficha si el asistente interpreta incorrectamente el mensaje." },
   "Ligado para novas mensagens de atendimento.": { es: "Activado para nuevos mensajes de atención." },
   "Desligado: o nome continua como sugestão para revisão.": { es: "Desactivado: el nombre sigue como sugerencia para revisar." },
+  // Persona humana (lib/agent-engine/persona-humana.ts) — Configurações › Atendimento e Recursos opcionais.
+  "Persona humana": { es: "Persona humana" },
+  "O agente se apresenta como uma pessoa da equipe e não revela que é IA, nem quando o cliente pergunta. O nome e a apresentação continuam vindo das instruções de cada agente. O pedido para falar com um atendente, a parada de quem não quer mais mensagens e a proteção de dados sensíveis continuam iguais. Vem desligada.": {
+    es: "El agente se presenta como una persona del equipo y no revela que es IA, ni siquiera cuando el cliente pregunta. El nombre y la presentación siguen viniendo de las instrucciones de cada agente. La solicitud de hablar con un agente humano, la detención para quien ya no quiere mensajes y la protección de datos sensibles siguen iguales. Viene desactivada.",
+  },
+  "Ligado: o agente fala como uma pessoa da equipe.": { es: "Activado: el agente habla como una persona del equipo." },
+  "Desligado: se o cliente perguntar, o agente diz que é um assistente.": { es: "Desactivado: si el cliente pregunta, el agente dice que es un asistente." },
+  "O agente se apresenta como pessoa da equipe e não revela que é IA.": { es: "El agente se presenta como persona del equipo y no revela que es IA." },
   "Com regras nesta lista, o telefone vinculado à conversa escolhe o agente antes da IA. Os demais números usam o fallback público. Intenções, campanhas e o agente anterior não mudam essa escolha.": { es: "Con reglas en esta lista, el teléfono vinculado a la conversación elige el agente antes de la IA. Los demás números usan el agente público de reserva. Las intenciones, campañas y el agente anterior no cambian esta elección." },
   "Telefone com DDI": { es: "Teléfono con código de país" },
   "Agente reservado": { es: "Agente reservado" },
